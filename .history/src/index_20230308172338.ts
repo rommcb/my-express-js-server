@@ -14,13 +14,19 @@ app.use(
   })
   );
 
-app.post('/', (req: express.Request, res: express.Response)=>{
+app.post('/', (req: any, res: any)=>{
     const { name } = req.body;
       
     res.send(`Welcome ${name}`);
 })
 
-app.listen(PORT);
+app.listen(PORT, (error: any) =>{
+	if(!error)
+		console.log("Server is Successfully Running, and App is listening on port "+ PORT);
+	else
+		console.log("Error occurred, server can't start", error);
+	}
+);
 
 app.get('/', (req: express.Request, res: express.Response) => {
     res.status(200);
