@@ -31,8 +31,7 @@ app.listen(PORT, (error) =>{
 app.get('/', (req, res) => {
     res.status(200);
     res.setHeader('Content-Type', 'application/json');
-
-    res.send({msg: "welcome to root URL of Server"});
+    res.send("welcome to root URL of Server");
 });
 
 
