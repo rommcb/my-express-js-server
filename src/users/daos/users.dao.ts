@@ -1,6 +1,6 @@
-import { CreateUserDto } from '../dtos/create.user.dto';
-import { PatchUserDto } from '../dtos/patch.user.dto';
-import { PutUserDto } from '../dtos/put.user.dto';
+import { CreateUserDto } from '../dto/create.user.dto';
+import { PatchUserDto } from '../dto/patch.user.dto';
+import { PutUserDto } from '../dto/put.user.dto';
 import shortid from 'shortid';
 import debug from 'debug';
 
@@ -62,6 +62,18 @@ class UsersDao {
         );
         this.users.splice(objIndex, 1);
         return `${userId} removed`;
+    }
+
+    async getUserByEmail(email: string) {
+        const objIndex = this.users.findIndex(
+            (obj: { email: string }) => obj.email === email
+        );
+        let currentUser = this.users[objIndex];
+        if (currentUser) {
+            return currentUser;
+        } else {
+            return null;
+        }
     }
 }
 
