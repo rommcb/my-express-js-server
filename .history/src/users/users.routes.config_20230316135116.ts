@@ -20,22 +20,20 @@ export class UsersRoutes extends CommonRoutesConfig {
 
         this.app.param(`userId`, UsersMiddleware.extractUserId);
 
+
         this.app
             .route(`/users/:userId`)
             .all(UsersMiddleware.validateUserExists)
             .get(UsersController.getUserById)
             .delete(UsersController.removeUser);
 
-        this.app.put(`/users/:userId`, [
-            UsersMiddleware.validateRequiredUserBodyFields,
-            UsersMiddleware.validateSameEmailBelongToSameUser,
-            UsersController.put,
-        ]);
-
-        this.app.patch(`/users/:userId`, [
-            UsersMiddleware.validatePatchEmail,
-            UsersController.patch,
-        ]);
+        this.app
+            .put((req: express.Request, res: express.Response) => {
+                res.status(200).send(`PUT requested for id ${req.params.userId}`);
+            })
+            .patch((req: express.Request, res: express.Response) => {
+                res.status(200).send(`PATCH requested for id ${req.params.userId}`);
+            })
 
             return this.app;    
         }
