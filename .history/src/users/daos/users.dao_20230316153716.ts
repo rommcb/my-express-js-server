@@ -65,10 +65,6 @@ class UsersDao {
     
         return existingUser;
     }
-
-    async removeUserById(userId: string) {
-        return this.User.deleteOne({ _id: userId }).exec();
-    }
 }
 
 export default new UsersDao();
