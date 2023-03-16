@@ -4,17 +4,17 @@ import debug from 'debug';
 const log: debug.IDebugger = debug('app:mongoose-service');
 
 class MongooseService {
-    private readonly uri = `mongodb+srv://${process.env.MONGODB_USER}:${process.env.MONGODB_PWD}@cluster0.oby0lcp.mongodb.net/?retryWrites=true&w=majority`;
+    private uri : string;
 
     private count = 0;
     private mongooseOptions = {
         useNewUrlParser: true,
         useUnifiedTopology: true,
         serverSelectionTimeoutMS: 5000,
-        useFindAndModify: false,
     };
 
     constructor() {
+        this.uri = `mongodb+srv://${process.env.MONGODB_USER}:${process.env.MONGODB_PWD}@cluster0.oby0lcp.mongodb.net/?retryWrites=true&w=majority`;
         this.connectWithRetry();
     }
 
@@ -24,6 +24,8 @@ class MongooseService {
 
     connectWithRetry = () => {
         log('Attempting MongoDB connection (will retry if needed)');
+        log('secret connection string /////////////////////////////', this.uri);
+
         mongoose
             .connect(this.uri, this.mongooseOptions)
             .then(() => {

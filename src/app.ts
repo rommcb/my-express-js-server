@@ -1,5 +1,6 @@
 import express from 'express';
 import cors from 'cors';
+require('dotenv').config();
 import * as http from 'http';
 import * as winston from 'winston';
 import * as expressWinston from 'express-winston';
@@ -8,7 +9,6 @@ import {UsersRoutes} from './users/users.routes.config';
 import debug from 'debug';
 const { MongoClient, ServerApiVersion } = require('mongodb');
 const mongoose = require('mongoose');
-require('dotenv').config()
   
 const app: express.Application = express();
 const server: http.Server = http.createServer(app);
