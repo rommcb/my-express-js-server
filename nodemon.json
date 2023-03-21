@@ -1,5 +1,5 @@
 {
-    "exec": "node --inspect --require ts-node/register src/index.ts",
+    "exec": "tsc && node --unhandled-rejections=strict ./dist/app.js",
     "watch": ["src"],
     "ext": "ts"
 }  
