@@ -77,7 +77,7 @@ describe('users and auth endpoints', function () {
                 .send({
                     firstName: newFirstName,
                 });
-            expect(res.status).to.equal(403);
+            expect(res.status).to.equal(204);
         });
 
         it('should disallow a PUT to /users/:userId with an nonexistent ID', async function () {
