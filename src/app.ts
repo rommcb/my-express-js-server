@@ -8,6 +8,7 @@ import {CommonRoutesConfig} from './common/common.routes.config';
 import {UsersRoutes} from './users/users.routes.config';
 import { AuthRoutes } from './auth/auth.routes.config';
 import debug from 'debug';
+import MongooseService from './common/services/mongoose.service'
 const { MongoClient, ServerApiVersion } = require('mongodb');
 const mongoose = require('mongoose');
   
@@ -19,6 +20,8 @@ const debugLog: debug.IDebugger = debug('app');
 
 app.use(express.json());
 app.use(cors());
+
+await MongooseService.connectWithRetry();
 
 // here we are preparing the expressWinston logging middleware configuration,
 // which will automatically log all HTTP requests handled by Express.js
@@ -33,6 +36,9 @@ const loggerOptions: expressWinston.LoggerOptions = {
 
 if (!process.env.DEBUG) {
   loggerOptions.meta = false; // when not debugging, log requests as one-liners
+  if (typeof global.it === 'function') {
+      loggerOptions.level = 'http'; // for non-debug test runs, squelch entirely
+  }
 }
 
 // initialize the logger with the above configuration
@@ -49,7 +55,7 @@ app.get('/', (req: express.Request, res: express.Response) => {
   res.status(200).send(runningMessage)
 });
 
-server.listen(port, () => {
+export default server.listen(port, () => {
   routes.forEach((route: CommonRoutesConfig) => {
       debugLog(`Routes configured for ${route.getName()}`);
   });

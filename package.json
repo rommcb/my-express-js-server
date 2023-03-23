@@ -6,7 +6,7 @@
   "scripts": {
     "start": "nodemon",
     "debug": "SET DEBUG=* && npm run start",
-    "test": "mocha -r ts-node/register 'test/**/*.test.ts' --unhandled-rejections=strict",
+    "test": "mocha -r ts-node/register 'src/test/**/*.test.ts' --unhandled-rejections=strict",
     "test-debug": "SET DEBUG=* && npm test"
   },
   "author": "rommcb",

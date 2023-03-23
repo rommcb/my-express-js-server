@@ -5,7 +5,6 @@ const log: debug.IDebugger = debug('app:mongoose-service');
 
 class MongooseService {
     private uri : string;
-
     private count = 0;
     private mongooseOptions = {
         useNewUrlParser: true,
@@ -22,9 +21,8 @@ class MongooseService {
         return mongoose;
     }
 
-    connectWithRetry = () => {
+    public connectWithRetry() {
         log('Attempting MongoDB connection (will retry if needed)');
-        log('secret connection string /////////////////////////////', this.uri);
 
         mongoose
             .connect(this.uri, this.mongooseOptions)
@@ -42,4 +40,5 @@ class MongooseService {
             });
     };
 }
+
 export default new MongooseService();
