@@ -4,17 +4,6 @@ import shortid from 'shortid';
 import mongoose from 'mongoose';
 import app from '../../app'
 
-
-mongoose.connection.on('disconnected', () => {
-    console.log('DB is disconnected');
-});
-
-mongoose.connection.on('connected', () => {
-    console.log('DB is connected!');
-});
-
-console.log('Ola');
-
 let firstUserIdTest = ''; // will later hold a value returned by our API
 const firstUserBody = {
     email: `romain+${shortid.generate()}@gmail.com`,
@@ -29,8 +18,10 @@ const newLastName2 = 'Faraco';
  
 describe('users and auth endpoints', function () {
     let request: supertest.SuperAgentTest;
+
     before(function () {
         request = supertest.agent(app);
+        console.log('MongoDB readyState', mongoose.connection.readyState);
     });
     after(function (done) {
         // shut down the Express.js server, close our MongoDB connection, then tell Mocha we're done:
@@ -184,4 +175,9 @@ describe('users and auth endpoints', function () {
             });
         });
     });
+});
+
+mongoose.connection.on('connected', () => {
+    console.log('DB is connected!');
+    run();
 });
