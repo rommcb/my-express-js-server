@@ -8,8 +8,6 @@ import {CommonRoutesConfig} from './common/common.routes.config';
 import {UsersRoutes} from './users/users.routes.config';
 import { AuthRoutes } from './auth/auth.routes.config';
 import debug from 'debug';
-const { MongoClient, ServerApiVersion } = require('mongodb');
-const mongoose = require('mongoose');
   
 const app: express.Application = express();
 const server: http.Server = http.createServer(app);
@@ -48,6 +46,7 @@ routes.push(new AuthRoutes(app));
 
 // this is a simple route to make sure everything is working properly
 const runningMessage = `Server running at http://localhost:${port}`;
+
 app.get('/', (req: express.Request, res: express.Response) => {
   res.status(200).send(runningMessage)
 });

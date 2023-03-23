@@ -1,8 +1,17 @@
 import supertest from 'supertest';
 import { expect } from 'chai';
 import shortid from 'shortid';
-import mongoose from 'mongoose';
+import mongoose, { ConnectionStates } from 'mongoose';
 import app from '../../app'
+
+
+mongoose.connection.on('disconnected', () => {
+    console.log('DB is disconnected');
+});
+
+mongoose.connection.on('connected', () => {
+    console.log('Connection is open!!!!!!!!!!!!!!!!!!!');
+});
 
 let firstUserIdTest = ''; // will later hold a value returned by our API
 const firstUserBody = {
@@ -15,7 +24,7 @@ let refreshToken = '';
 const newFirstName = 'Jose';
 const newFirstName2 = 'Paulo';
 const newLastName2 = 'Faraco';
-
+ 
 describe('users and auth endpoints', function () {
     let request: supertest.SuperAgentTest;
     before(function () {
@@ -70,7 +79,7 @@ describe('users and auth endpoints', function () {
             expect(res.status).to.equal(403);
         });
 
-        it('should disallow a PATCH to /users/:userId', async function () {
+        it('should allow a PATCH to /users/:userId', async function () {
             const res = await request
                 .patch(`/users/${firstUserIdTest}`)
                 .set({ Authorization: `Bearer ${accessToken}` })
