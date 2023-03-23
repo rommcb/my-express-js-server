@@ -1,7 +1,7 @@
 import supertest from 'supertest';
 import { expect } from 'chai';
 import shortid from 'shortid';
-import mongoose, { ConnectionStates } from 'mongoose';
+import mongoose from 'mongoose';
 import app from '../../app'
 
 
@@ -10,8 +10,10 @@ mongoose.connection.on('disconnected', () => {
 });
 
 mongoose.connection.on('connected', () => {
-    console.log('Connection is open!!!!!!!!!!!!!!!!!!!');
+    console.log('DB is connected!');
 });
+
+console.log('Ola');
 
 let firstUserIdTest = ''; // will later hold a value returned by our API
 const firstUserBody = {
